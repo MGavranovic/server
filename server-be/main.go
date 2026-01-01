@@ -32,13 +32,13 @@ func main() {
 	log.SetOutput(file)
 	// setup http3 server
 	mux := http.NewServeMux()
-	go func() {
-		log.Println("TCP HTTPS on :8443")
-		err := http.ListenAndServe(":8443", mux)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	// go func() {
+	// 	log.Println("TCP HTTPS on :8443")
+	// 	err := http.ListenAndServe(":8443", mux)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }()
 
 	tlsConfig := generateTLSConfig()
 	srv := &http3.Server{
@@ -47,10 +47,10 @@ func main() {
 		TLSConfig: tlsConfig,
 	}
 
-	mux.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.Write([]byte("Testge"))
-	})
+	// mux.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	// 	w.Write([]byte("Testge"))
+	// })
 
 	log.Printf("Server starting on port %s", srv.Addr)
 	if err := srv.ListenAndServe(); err != nil {
